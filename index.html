@@ -1,215 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=57937&amp;path=livereload" data-no-instant defer></script>
-  <title>Robert Sparks</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Robert Sparks">
-<meta name="description" content="Robert Sparks&#39;s personal website">
-<meta name="keywords" content="blog,developer,personal">
-
-
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Robert Sparks">
-  <meta name="twitter:description" content="Robert Sparks&#39;s personal website">
-
-<meta property="og:url" content="http://localhost:57937/">
-  <meta property="og:site_name" content="Robert Sparks">
-  <meta property="og:title" content="Robert Sparks">
-  <meta property="og:description" content="Robert Sparks&#39;s personal website">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="website">
-
-
-
-
-<link rel="canonical" href="http://localhost:57937/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.css" media="screen">
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.css" media="screen">
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-<link rel="alternate" type="application/rss+xml" href="/index.xml" title="Robert Sparks" />
-
-
-<meta name="generator" content="Hugo 0.138.0">
-
-
-
-
-
+<html>
+<head>
+  <title>Lorenz Attractor</title>
 </head>
+<body>
+  <canvas id="canvas" width="800" height="800"></canvas>
 
-
-
-
-
-
-<body class="preload-transitions colorscheme-dark">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    
-    <a class="navigation-title" href="http://localhost:57937/">
-      Robert Sparks
-    </a>
-    
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
+  <script>
+    class Lorenz {
+      constructor() {
+        // Classic Lorenz parameters
+        this.sigma = 10;    // Prandtl number
+        this.rho = 28;      // Rayleigh number
+        this.beta = 8/3;    // Physical proportion
         
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/">Home</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/about/">About</a>
-            </li>
-          
+        // Initial conditions (small perturbation from origin)
+        this.x = 0.1;
+        this.y = 0.1;
+        this.z = 0.1;
         
+        // Visualization parameters
+        this.scale = 10;
+        this.offsetX = 400;
+        this.offsetY = 400;
+        this.rotationY = Math.PI/4; // Add some rotation for better 3D effect
+      }
+
+      // RK4 integration step
+      next() {
+        const dt = 0.004;  // Time step
+        const k1 = this.derivatives(this.x, this.y, this.z);
+        const k2 = this.derivatives(
+          this.x + dt*k1.x/2, 
+          this.y + dt*k1.y/2, 
+          this.z + dt*k1.z/2
+        );
+        const k3 = this.derivatives(
+          this.x + dt*k2.x/2, 
+          this.y + dt*k2.y/2, 
+          this.z + dt*k2.z/2
+        );
+        const k4 = this.derivatives(
+          this.x + dt*k3.x, 
+          this.y + dt*k3.y, 
+          this.z + dt*k3.z
+        );
+
+        // Update state
+        this.x += dt * (k1.x + 2*k2.x + 2*k3.x + k4.x) / 6;
+        this.y += dt * (k1.y + 2*k2.y + 2*k3.y + k4.y) / 6;
+        this.z += dt * (k1.z + 2*k2.z + 2*k3.z + k4.z) / 6;
+
+        // Simple perspective projection
+        const cosY = Math.cos(this.rotationY);
+        const sinY = Math.sin(this.rotationY);
         
-      </ul>
+        // Rotate around Y axis and apply scale/offset
+        return {
+          x: (this.x * cosY - this.z * sinY) * this.scale + this.offsetX,
+          y: this.y * this.scale + this.offsetY
+        };
+      }
+
+      // The Lorenz system equations
+      derivatives(x, y, z) {
+        return {
+          x: this.sigma * (y - x),
+          y: x * (this.rho - z) - y,
+          z: x * y - this.beta * z
+        };
+      }
+    }
+
+    // Setup canvas
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
     
-  </section>
-</nav>
+    // Set black background
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // Initialize system
+    const attractor = new Lorenz();
 
-    <div class="content">
+    // Set drawing style - using blue hue for classic Lorenz look
+    ctx.strokeStyle = 'rgba(100, 200, 255, 0.1)';
+    ctx.lineWidth = 0.5;
+
+    // Previous point for line drawing
+    let prevPoint = attractor.next();
+
+    // Animation function
+    function draw() {
+      // Draw multiple points per frame
+      for(let i = 0; i < 100; i++) {
+        const point = attractor.next();
+        
+        ctx.beginPath();
+        ctx.moveTo(prevPoint.x, prevPoint.y);
+        ctx.lineTo(point.x, point.y);
+        ctx.stroke();
+        
+        prevPoint = point;
+      }
       
-  <section class="container centered">
-  <div class="about">
-    
+      requestAnimationFrame(draw);
+    }
 
-
-
-    <h1>Robert Sparks</h1>
-
-<h2>Software Developer </h2>
-
-
-
-    
-  </div>
-
-  
-
-</section>
-
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-    2024
-     Robert Sparks 
-    ·
-    
-    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.js"></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+    // Start animation
+    draw();
+  </script>
 </body>
-
 </html>
