@@ -4,17 +4,17 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    emily-theme = {
+    zola-theme = {
       url = "github:khoroo/emily_zola_theme";
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, emily-theme }:
+  outputs = { self, nixpkgs, flake-utils, zola-theme }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        themeName = ((builtins.fromTOML (builtins.readFile "${emily-theme}/theme.toml")).name);
+        themeName = ((builtins.fromTOML (builtins.readFile "${zola-theme}/theme.toml")).name);
       in
       {
         packages.website = pkgs.stdenv.mkDerivation rec {
@@ -25,7 +25,7 @@
           
           configurePhase = ''
             mkdir -p "themes/${themeName}"
-            cp -r ${emily-theme}/* "themes/${themeName}"
+            cp -r ${zola-theme}/* "themes/${themeName}"
           '';
           
           buildPhase = "zola build";
@@ -38,7 +38,7 @@
           packages = [ pkgs.zola ];
           shellHook = ''
             mkdir -p themes
-            ln -sn "${emily-theme}" "themes/${themeName}"
+            ln -sn "${zola-theme}" "themes/${themeName}"
           '';
         };
       }

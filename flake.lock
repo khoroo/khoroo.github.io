@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "emily-theme": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1732438182,
-        "narHash": "sha256-p+8Ilc4Bto3SDAZWj+rfgz1+afUr2p5N+YLDRzK5DKo=",
-        "owner": "khoroo",
-        "repo": "emily_zola_theme",
-        "rev": "2e3f54b3c950d728b8f844bd5350b1e79b3e96e9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "khoroo",
-        "repo": "emily_zola_theme",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -52,9 +36,9 @@
     },
     "root": {
       "inputs": {
-        "emily-theme": "emily-theme",
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "zola-theme": "zola-theme"
       }
     },
     "systems": {
@@ -69,6 +53,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "zola-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1732438182,
+        "narHash": "sha256-p+8Ilc4Bto3SDAZWj+rfgz1+afUr2p5N+YLDRzK5DKo=",
+        "owner": "khoroo",
+        "repo": "emily_zola_theme",
+        "rev": "2e3f54b3c950d728b8f844bd5350b1e79b3e96e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "khoroo",
+        "repo": "emily_zola_theme",
         "type": "github"
       }
     }
