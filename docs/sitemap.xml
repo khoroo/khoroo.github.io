@@ -4,10 +4,19 @@
         <loc>https://robert.sparks.me.uk/</loc>
     </url>
     <url>
+        <loc>https://robert.sparks.me.uk/about/</loc>
+        <lastmod>2024-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://robert.sparks.me.uk/categories/</loc>
+    </url>
+    <url>
         <loc>https://robert.sparks.me.uk/post/</loc>
     </url>
     <url>
-        <loc>https://robert.sparks.me.uk/post/first-post/</loc>
-        <lastmod>2024-11-24</lastmod>
+        <loc>https://robert.sparks.me.uk/post/welcome-to-emily/</loc>
+    </url>
+    <url>
+        <loc>https://robert.sparks.me.uk/tags/</loc>
     </url>
 </urlset>

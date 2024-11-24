@@ -2,10 +2,31 @@ base_url = "https://robert.sparks.me.uk"
 title = "Robert Sparks"
 theme = "emily_zola_theme"
 
+# Enable taxonomies
+taxonomies = [
+    {name = "categories", rss = false},
+    {name = "tags", rss = false},
+]
+
 [markdown]
 highlight_code = true
 highlight_theme = "dracula"
+render_emoji = false
+
+[search]
+include_title = false
+include_description = false
+include_content = false
 
 [extra]
-author = "Robert Sparks"
+# Theme specific settings
 emily_author = "Robert Sparks"
+emily_icon = "/images/logo.png"
+emily_favicon = "/images/favicon.png"
+emily_iconsize = 70
+emily_indexposts = 5
+emily_dark_mode = true
+emily_theme_toggler = true
+
+# Author info
+author = "Robert Sparks"
