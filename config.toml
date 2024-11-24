@@ -1,0 +1,11 @@
+base_url = "https://robert.sparks.me.uk"
+title = "Robert Sparks"
+theme = "emily_zola_theme"
+
+[markdown]
+highlight_code = true
+highlight_theme = "dracula"
+
+[extra]
+author = "Robert Sparks"
+emily_author = "Robert Sparks"
