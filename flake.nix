@@ -1,11 +1,11 @@
 {
-  description = "A flake for developing and building a Zola site";
+  description = "Flake for www.robert.sparks.me.uk";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     swatches = {
       url = "github:khoroo/swatches";
-      flake = false;
+      flake = false; # TODO: make true?
     };
     zola-theme = {
       url = "github:khoroo/emily_zola_theme";
