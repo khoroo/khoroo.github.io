@@ -1,7 +1,7 @@
 +++
 title = "Posts"
-sort_by = "date"
-template = "list.html"
+template = "post.html"
+page_template = "post-page.html"
+[extra]
+math = false
 +++
-
-All my posts are listed here.
