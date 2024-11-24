@@ -38,7 +38,24 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
+        "swatches": "swatches",
         "zola-theme": "zola-theme"
+      }
+    },
+    "swatches": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1732209608,
+        "narHash": "sha256-AymUlXPFwHG7Dwgd1rlXR3jgofOWR9XdiaDLJqmzfxY=",
+        "owner": "khoroo",
+        "repo": "swatches",
+        "rev": "5acba5a27f8bafac55b6ef80b492b5e1fd2f921e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "khoroo",
+        "repo": "swatches",
+        "type": "github"
       }
     },
     "systems": {

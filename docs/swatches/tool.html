@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Colour Picker</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .drop-zone.drag-over {
+            background: #f0f0f0;
+            border-color: #666;
+        }
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: crosshair;
+            margin-bottom: 20px;
+        }
+        .preview-section {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .preview-color {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .preview-info {
+            font-size: 14px;
+            color: #333;
+        }
+        .colours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .colour-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .colour-block {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            margin-bottom: 8px;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .colour-block:hover {
+            transform: scale(1.05);
+        }
+        .colour-hex {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+        .export-panel {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            cursor: pointer;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="drop-zone" id="dropZone">
+            <input type="file" id="imageInput" accept="image/*">
+            <p>Drop image here or click to upload</p>
+        </div>
+        <canvas id="canvas"></canvas>
+        <div class="preview-section">
+            <div class="preview-color" id="colourPreview"></div>
+            <div class="preview-info">
+                <div id="colourValue"></div>
+                <div id="position"></div>
+            </div>
+        </div>
+        <div class="colours-grid" id="colourGrid"></div>
+        <div class="export-panel" id="exportCode"></div>
+    </div>
+
+    <script>
+        const els = {
+            canvas: document.getElementById('canvas'),
+            dropZone: document.getElementById('dropZone'),
+            colourPreview: document.getElementById('colourPreview'),
+            colourValue: document.getElementById('colourValue'),
+            position: document.getElementById('position'),
+            colourGrid: document.getElementById('colourGrid'),
+            exportCode: document.getElementById('exportCode'),
+            imageInput: document.getElementById('imageInput')
+        };
+        
+        const ctx = els.canvas.getContext('2d');
+        let selectedColours = [];
+
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0').toUpperCase()).join('');
+        }
+
+        function loadImage(file) {
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = function() {
+                els.canvas.width = img.width;
+                els.canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                els.dropZone.style.display = 'none';
+                els.canvas.style.display = 'block';
+            }
+        }
+
+        function updateUI() {
+            els.colourGrid.innerHTML = selectedColours.map((hex, i) => `
+                <div class="colour-item">
+                    <div class="colour-block" 
+                         style="background-color: ${hex}"
+                         onclick="removeColour(${i})">
+                    </div>
+                    <span class="colour-hex">${hex}</span>
+                </div>
+            `).join('');
+            els.exportCode.textContent = JSON.stringify(selectedColours);
+        }
+
+        function addColour(hex) {
+            if (!selectedColours.includes(hex)) {
+                selectedColours.push(hex);
+                updateUI();
+            }
+        }
+
+        function removeColour(index) {
+            selectedColours.splice(index, 1);
+            updateUI();
+        }
+
+        els.exportCode.onclick = function() {
+            navigator.clipboard.writeText(this.textContent);
+            const originalText = this.textContent;
+            this.textContent = 'Copied!';
+            setTimeout(() => this.textContent = originalText, 1000);
+        };
+
+        els.imageInput.onchange = e => e.target.files[0] && loadImage(e.target.files[0]);
+
+        els.dropZone.ondragover = e => {
+            e.preventDefault();
+            els.dropZone.classList.add('drag-over');
+        };
+
+        els.dropZone.ondragleave = () => els.dropZone.classList.remove('drag-over');
+
+        els.dropZone.ondrop = e => {
+            e.preventDefault();
+            els.dropZone.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            file?.type.startsWith('image/') && loadImage(file);
+        };
+
+        els.canvas.onmousemove = e => {
+            const rect = els.canvas.getBoundingClientRect();
+            const scaleX = els.canvas.width / rect.width;
+            const scaleY = els.canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            const [r, g, b] = ctx.getImageData(x, y, 1, 1).data;
+            const hex = rgbToHex(r, g, b);
+            
+            els.colourPreview.style.backgroundColor = hex;
+            els.colourValue.textContent = `HEX: ${hex}`;
+            els.position.textContent = `Position: ${Math.round(x)}, ${Math.round(y)}`;
+        };
+
+        els.canvas.onclick = e => {
+            const rect = els.canvas.getBoundingClientRect();
+            const scaleX = els.canvas.width / rect.width;
+            const scaleY = els.canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            const [r, g, b] = ctx.getImageData(x, y, 1, 1).data;
+            addColour(rgbToHex(r, g, b));
+        };
+    </script>
+</body>
+</html>
