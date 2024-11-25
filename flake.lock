@@ -45,11 +45,11 @@
     "swatches": {
       "flake": false,
       "locked": {
-        "lastModified": 1732209608,
-        "narHash": "sha256-AymUlXPFwHG7Dwgd1rlXR3jgofOWR9XdiaDLJqmzfxY=",
+        "lastModified": 1732570875,
+        "narHash": "sha256-VNwQFPMQf/qA57e7KQtkaPo7q+e3OB4sytOP34JYvLM=",
         "owner": "khoroo",
         "repo": "swatches",
-        "rev": "5acba5a27f8bafac55b6ef80b492b5e1fd2f921e",
+        "rev": "8e827cb2df04c7b45b701cb6ca2778d3d55c9796",
         "type": "github"
       },
       "original": {
