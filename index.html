@@ -1,114 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Lorenz Attractor</title>
-</head>
-<body>
-  <canvas id="canvas" width="800" height="800"></canvas>
-
-  <script>
-    class Lorenz {
-      constructor() {
-        // Classic Lorenz parameters
-        this.sigma = 10;    // Prandtl number
-        this.rho = 28;      // Rayleigh number
-        this.beta = 8/3;    // Physical proportion
-        
-        // Initial conditions (small perturbation from origin)
-        this.x = 0.1;
-        this.y = 0.1;
-        this.z = 0.1;
-        
-        // Visualization parameters
-        this.scale = 10;
-        this.offsetX = 400;
-        this.offsetY = 400;
-        this.rotationY = Math.PI/4; // Add some rotation for better 3D effect
-      }
-
-      // RK4 integration step
-      next() {
-        const dt = 0.004;  // Time step
-        const k1 = this.derivatives(this.x, this.y, this.z);
-        const k2 = this.derivatives(
-          this.x + dt*k1.x/2, 
-          this.y + dt*k1.y/2, 
-          this.z + dt*k1.z/2
-        );
-        const k3 = this.derivatives(
-          this.x + dt*k2.x/2, 
-          this.y + dt*k2.y/2, 
-          this.z + dt*k2.z/2
-        );
-        const k4 = this.derivatives(
-          this.x + dt*k3.x, 
-          this.y + dt*k3.y, 
-          this.z + dt*k3.z
-        );
-
-        // Update state
-        this.x += dt * (k1.x + 2*k2.x + 2*k3.x + k4.x) / 6;
-        this.y += dt * (k1.y + 2*k2.y + 2*k3.y + k4.y) / 6;
-        this.z += dt * (k1.z + 2*k2.z + 2*k3.z + k4.z) / 6;
-
-        // Simple perspective projection
-        const cosY = Math.cos(this.rotationY);
-        const sinY = Math.sin(this.rotationY);
-        
-        // Rotate around Y axis and apply scale/offset
-        return {
-          x: (this.x * cosY - this.z * sinY) * this.scale + this.offsetX,
-          y: this.y * this.scale + this.offsetY
-        };
-      }
-
-      // The Lorenz system equations
-      derivatives(x, y, z) {
-        return {
-          x: this.sigma * (y - x),
-          y: x * (this.rho - z) - y,
-          z: x * y - this.beta * z
-        };
-      }
-    }
-
-    // Setup canvas
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Set black background
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Initialize system
-    const attractor = new Lorenz();
-
-    // Set drawing style - using blue hue for classic Lorenz look
-    ctx.strokeStyle = 'rgba(100, 200, 255, 0.1)';
-    ctx.lineWidth = 0.5;
-
-    // Previous point for line drawing
-    let prevPoint = attractor.next();
-
-    // Animation function
-    function draw() {
-      // Draw multiple points per frame
-      for(let i = 0; i < 100; i++) {
-        const point = attractor.next();
-        
-        ctx.beginPath();
-        ctx.moveTo(prevPoint.x, prevPoint.y);
-        ctx.lineTo(point.x, point.y);
-        ctx.stroke();
-        
-        prevPoint = point;
-      }
-      
-      requestAnimationFrame(draw);
-    }
-
-    // Start animation
-    draw();
-  </script>
-</body>
-</html>
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Robert Sparks</title><!-- Add your other meta tags, etc. --><script>
+      // This script runs immediately in the head to prevent flash of wrong theme
+      (function() {
+        // Check localStorage first for user preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (savedTheme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          // If no preference saved, check system preference
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script><link rel="stylesheet" href="/_astro/blog.CIctvfVL.css"></head> <body class="min-h-screen w-full max-w-content mx-auto p-4 bg-background text-text dark:bg-dark-bg dark:text-dark-text"> <div id="app" class="w-full min-h-screen flex flex-col">   <div class="container mx-auto px-4 py-4"> <header class="h-header"> <div class="w-full h-full border-b-2 border-accent mb-4 relative overflow-visible"> <div class="flex items-center h-full justify-between"> <div class=""> <nav class="text-center"> <ul> <li><a href="/" class="font-bold dark-text no-underline">Robert Sparks</a></li> </ul> <ul class="flex gap-4 justify-left text-sm"> <li><a href="/blog" class="font-bold dark-text no-underline">blog</a></li> <li><a href="/projects" class="font-bold dark-text no-underline">projects</a></li> </ul> </nav> </div> <div class="h-[60px] w-[60px] absolute top-1/2 right-0 -translate-y-1/2"> <canvas id="attractorCanvas" class="w-full h-full dark:invert"></canvas> </div> </div> </div> </header> <script type="module" src="/_astro/Header.astro_astro_type_script_index_0_lang.BVgwjHDI.js"></script> <main class="flex flex-col items-center justify-center min-h-screen py-2"> <div class="content text-center"> <h2 class="text-4xl md:text-5xl font-bold mb-4">Hello World</h2> <p class="text-lg mb-2">Welcome to my personal website. I'm Robert Sparks, a developer and creator.</p> <p class="text-md">Feel free to explore my projects and blog posts using the navigation above.</p> </div> </main></div>  </div> <footer class="mt-8 py-4 border-t border-gray-800 text-center dark:border-gray-200"> <a id="themeToggle" href="javascript:void(0)">toggle dark mode</a> </footer> <script type="module">document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("themeToggle");e&&(e.addEventListener("click",()=>{document.documentElement.classList.contains("dark")?(document.documentElement.classList.remove("dark"),localStorage.setItem("theme","light")):(document.documentElement.classList.add("dark"),localStorage.setItem("theme","dark"))}),localStorage.getItem("theme")==="dark"||!("theme"in localStorage)&&window.matchMedia("(prefers-color-scheme: dark)").matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark"))});</script> </body> </html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Robert Sparks</title><!-- Add your other meta tags, etc. --><script>
+      // This script runs immediately in the head to prevent flash of wrong theme
+      (function() {
+        // Check localStorage first for user preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (savedTheme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          // If no preference saved, check system preference
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script><link rel="stylesheet" href="/_astro/blog.CIctvfVL.css"></head> <body class="min-h-screen w-full max-w-content mx-auto p-4 bg-background text-text dark:bg-dark-bg dark:text-dark-text"> <div id="app" class="w-full min-h-screen flex flex-col">   <div class="container mx-auto px-4 py-4"> <header class="h-header"> <div class="w-full h-full border-b-2 border-accent mb-4 relative overflow-visible"> <div class="flex items-center h-full justify-between"> <div class=""> <nav class="text-center"> <ul> <li><a href="/" class="font-bold dark-text no-underline">Robert Sparks</a></li> </ul> <ul class="flex gap-4 justify-left text-sm"> <li><a href="/blog" class="font-bold dark-text no-underline">blog</a></li> <li><a href="/projects" class="font-bold dark-text no-underline">projects</a></li> </ul> </nav> </div> <div class="h-[60px] w-[60px] absolute top-1/2 right-0 -translate-y-1/2"> <canvas id="attractorCanvas" class="w-full h-full dark:invert"></canvas> </div> </div> </div> </header> <script type="module" src="/_astro/Header.astro_astro_type_script_index_0_lang.BVgwjHDI.js"></script> <main class="mt-4 max-w-content mx-auto"> <article class="prose lg:prose-xl dark:prose-invert mx-auto"> <div class="mb-8"> <h1 class="text-4xl font-bold mb-2">My First Blog Post</h1> <div class="text-gray-600 dark:text-gray-400 mb-4"> October 1, 2023 </div> <div class="flex gap-2 mb-4"> <span class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-xs"> astro </span><span class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-xs"> web development </span> </div> </div> <div class="content"> <h1 id="hello-world">Hello World</h1>
+<p>This is my first blog post using <strong>Astro</strong> content collections.</p>
+<p>TODO</p> </div> <div class="mt-8 pt-4 border-t border-gray-200 dark:border-gray-800"> <a href="/blog" class="text-blue-600 dark:text-blue-400 hover:underline">&larr; Back to all posts</a> </div> </article> </main> </div>  </div> <footer class="mt-8 py-4 border-t border-gray-800 text-center dark:border-gray-200"> <a id="themeToggle" href="javascript:void(0)">toggle dark mode</a> </footer> <script type="module">document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("themeToggle");e&&(e.addEventListener("click",()=>{document.documentElement.classList.contains("dark")?(document.documentElement.classList.remove("dark"),localStorage.setItem("theme","light")):(document.documentElement.classList.add("dark"),localStorage.setItem("theme","dark"))}),localStorage.getItem("theme")==="dark"||!("theme"in localStorage)&&window.matchMedia("(prefers-color-scheme: dark)").matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark"))});</script> </body> </html>
