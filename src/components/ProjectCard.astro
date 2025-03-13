@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  viewLink?: string;
+  toolLink?: string;
+  githubLink?: string;
+}
+
+const { title, description, viewLink, toolLink, githubLink } = Astro.props as Props;
+---
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
+    <div class="p-6">
+        <h3 class="text-2xl font-semibold mb-2 dark:text-white">{title}</h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+            {description}
+        </p>
+        <div class="flex space-x-4">
+            {viewLink && (
+                <a href={viewLink} class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 flex items-center">
+                    <span class="mr-1">View</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+            )}
+            {toolLink && (
+                <a href={toolLink} class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 flex items-center">
+                    <span class="mr-1">Use Tool</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+            )}
+            {githubLink && (
+                <a href={githubLink} class="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center">
+                    <span class="mr-1">GitHub</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.84 9.48.5.092.682-.216.682-.48 0-.236-.008-.864-.013-1.696-2.782.602-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.027 1.531 1.027.892 1.526 2.341 1.084 2.91.828.092-.643.35-1.083.636-1.332-2.22-.258-4.551-1.11-4.551-4.935 0-1.09.39-1.988 1.029-2.688-.103-.258-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026.797-.22 1.65-.33 2.503-.33.854 0 1.708.11 2.503.33 1.91-1.296 2.75-1.026 2.75-1.026.546 1.378.202 2.392.098 2.65.64.7 1.028 1.598 1.028 2.688 0 3.834-2.339 4.675-4.566 4.922.359.309.675.92.675 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.579.687.479C19.137 20.156 22 16.425 22 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            )}
+        </div>
+    </div>
+</div>

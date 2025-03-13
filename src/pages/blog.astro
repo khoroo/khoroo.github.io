@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+// Fetch all blog posts
+const posts: CollectionEntry<'blog'>[] = await getCollection('blog');
+// Sort posts by date (newest first)
+const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<Layout>
+  <title slot="title">blog</title>
+  
+  <div class="container mx-auto px-4 py-4">
+    <Header />
+    <main class="mt-4 max-w-content mx-auto">
+      <div class="prose lg:prose-xl">
+        <h2 class="text-3xl font-bold mb-4">Blog</h2>
+        
+        {sortedPosts.length === 0 ? (
+          <p>No blog posts found. Add some in the src/content/blog directory!</p>
+        ) : (
+          <ul class="space-y-4 list-none pl-0">
+            {sortedPosts.map(post => (
+              <li class="border-b pb-4 border-accent dark:border-gray-700">
+                <a href={`/blog/${post.slug}`} class="no-underline">
+                  <h3 class="text-xl font-semibold mb-1 hover:underline">{post.data.title}</h3>
+                  <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                    <span>{new Date(post.data.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long', 
+                      day: 'numeric'
+                    })}</span>
+                    {post.data.tags && (
+                      <div class="ml-4 flex gap-2">
+                        {post.data.tags.map((tag: any) => (
+                          <span class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-xs">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </main>
+  </div>
+</Layout>

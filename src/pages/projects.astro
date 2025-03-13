@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+---
+
+<Layout>
+  <title slot="title">Projects</title>
+  
+  <div class="container mx-auto px-4 py-4">
+    <Header />
+    <main class="my-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <ProjectCard
+          title="Colour Swatches"
+          description="A web application that renders color swatches, allowing users to visualize and compare different color schemes. Includes a color picker tool for precise color selection."
+          viewLink="https://robert.sparks.me.uk/swatches"
+          toolLink="https://robert.sparks.me.uk/swatches/tool.html"
+          githubLink="https://github.com/khoroo/swatches"
+        />
+        <ProjectCard
+          title="Infinite Lunch"
+          description="An exploration of the traveling salesman problem, visualizing efficient routes for visiting multiple locations. Demonstrates pathfinding algorithms."
+          viewLink="https://robert.sparks.me.uk/infinite-lunch"
+          githubLink="https://github.com/khoroo/infinte-lunch"
+        />
+        <ProjectCard
+          title="Gumowski-Mira Attractor"
+          description="A visualizer for the Gumowski-Mira attractor, a chaotic system known for its complex and beautiful patterns."
+          viewLink="https://robert.sparks.me.uk/gumowski-mira/"
+          githubLink="https://github.com/khoroo/gumowski-mira"
+        />
+      </div>
+      
+      <!-- <div class="mt-12 max-w-3xl mx-auto">
+        <h3 class="text-2xl font-semibold mb-4 dark:text-white">Project Details</h3>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+          These projects were developed to provide simple yet powerful tools for working with colors in web development.
+          The Colour Swatches application allows visualization of color schemes, while the Picker Tool enables precise 
+          color selection for designers and developers.
+        </p>
+        <h4 class="text-xl font-semibold mt-6 mb-2 dark:text-white">Technologies Used</h4>
+        <ul class="list-disc pl-5 mt-2 text-gray-700 dark:text-gray-300">
+          <li>HTML5, CSS3 and JavaScript</li>
+          <li>Modern ES6+ features for dynamic rendering</li>
+          <li>Responsive design with mobile support</li>
+        </ul>
+      </div> -->
+    </main>
+  </div>
+</Layout>
