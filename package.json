@@ -5,13 +5,11 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "deploy": "gh-pages -d dist/",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "astro": "^5.5.2",
-    "gh-pages": "^6.3.0"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.0",
