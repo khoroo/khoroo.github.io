@@ -9,9 +9,55 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 1.2;
+    line-height: 1.5;
   }
+  
   body {
     margin: 0;
+    @apply bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-200;
+  }
+
+  p {
+    @apply my-4;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold my-6;
+  }
+
+  h1 {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  h2 {
+    @apply text-2xl sm:text-3xl;
+  }
+  
+  /* Removed global link styling */
+  
+  table {
+    @apply w-full my-6;
+  }
+  
+  th {
+    @apply bg-gray-100 dark:bg-gray-800 p-2 text-left;
+  }
+  
+  td {
+    @apply border-t border-gray-300 dark:border-gray-700 p-2;
+  }
+
+  code {
+    @apply px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-sm;
+  }
+  
+  pre {
+    @apply p-4 my-4 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-auto;
+  }
+}
+
+@layer components {
+  .container {
+    @apply px-4 mx-auto max-w-4xl;
   }
 }
