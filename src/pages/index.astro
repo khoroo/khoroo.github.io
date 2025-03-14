@@ -4,20 +4,23 @@ import Header from '../components/Header.astro';
 ---
 
 <Layout>
-  <title slot="title">robert sparks</title>
+  <title slot="title">Robert Sparks</title>
   
   <div class="container mx-auto px-4 py-4">
     <Header />
-    <main class="flex flex-col items-center justify-center min-h-screen py-2">
-      <div class="content text-center">
-        <h2 class="text-4xl md:text-5xl font-bold mb-4">Hello World</h2>
-        <p class="text-lg mb-2">Welcome to my personal website. I'm Robert Sparks, a developer and creator.</p>
-        <p class="text-md">Feel free to explore my projects and blog posts using the navigation above.</p>
-      </div>
-
-      </div>
+    <main class="mt-8">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl font-bold mb-6">About</h1>
+        
+        <p class="text-base mb-5">
+          Hello! I'm a data scientist with a master's degree in Engineering Mathematics from the University of Bristol. I'm passionate about approaching problems mathematically and presenting results beautifully. 
+          At Gousto, I've applied my skills in a talented team to solve novel combinatorial optimization problems that improved supply chain efficiency.
+        </p>
+        
+        <p class="text-base mb-6">
+          When I'm not coding, you'll find me cycling through the countryside, hunting for geocaches, or enjoying a refreshing swim.
+        </p>
       </div>
     </main>
   </div>
-
 </Layout>
