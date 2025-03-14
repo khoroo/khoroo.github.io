@@ -13,4 +13,4 @@ Stack:
  # To Do
   - mathjax or similar
   - change header from canvas component to just image in folder
-  - 
+  - add linting
