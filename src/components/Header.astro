@@ -14,74 +14,8 @@
       </nav>
       </div>
       <div class="h-[60px] w-[60px] absolute top-1/2 right-0 -translate-y-1/2">
-        <canvas id="attractorCanvas" class="w-full h-full dark:invert"></canvas>
+        <img id="attractorImage" src="/logo.png" alt="Attractor" class="w-[60px] h-[60px] dark:invert pixelated">
       </div>
     </div>
   </div>
 </header>
-
-<script>
-  // Check if OffscreenCanvas and Worker are supported
-  const supportsOffscreenCanvas = 'OffscreenCanvas' in window;
-  let worker: Worker | null = null;
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('attractorCanvas');
-    if (!(canvas instanceof HTMLCanvasElement)) {
-      console.error('Canvas element not found or not a canvas element');
-      return;
-    }
-    
-    // Set canvas dimensions based on its display size
-    const rect = canvas.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    
-    // Check if we can use a web worker with OffscreenCanvas
-    if (supportsOffscreenCanvas && 'transferControlToOffscreen' in canvas) {
-      try {
-        // Create a worker
-        worker = new Worker(
-          new URL('../scripts/attractorWorker.ts', import.meta.url),
-          { type: 'module' }
-        );
-        
-        // Transfer canvas control to worker
-        const offscreen = canvas.transferControlToOffscreen();
-        worker.postMessage({
-          type: 'init',
-          canvas: offscreen,
-          width: canvas.width,
-          height: canvas.height,
-          dpr: dpr
-        }, [offscreen]);
-        
-      } catch (e) {
-        console.error('Error initializing Web Worker:', e);
-        fallbackToDirectDrawing(canvas);
-      }
-    } else {
-      // Fallback for browsers that don't support OffscreenCanvas
-      fallbackToDirectDrawing(canvas);
-    }
-  });
-  
-  function fallbackToDirectDrawing(canvas: HTMLCanvasElement) {
-    // Import the attractor function for direct drawing
-    import('../scripts/attractor').then(module => {
-      const { drawAttractor } = module;
-      drawAttractor(canvas);
-    }).catch(err => {
-      console.error('Error importing attractor module:', err);
-    });
-  }
-  
-  // Clean up worker when page unloads (optional)
-  window.addEventListener('beforeunload', () => {
-    if (worker) {
-      worker.terminate();
-      worker = null;
-    }
-  });
-</script>
