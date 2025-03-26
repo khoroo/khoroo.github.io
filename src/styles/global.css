@@ -50,11 +50,11 @@
   }
 
   code {
-    @apply px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-sm;
+    @apply px-1 py-0.5 rounded bg-transparent dark:bg-gray-800 text-sm;
   }
   
   pre {
-    @apply p-4 my-4 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-auto;
+    @apply p-4 my-4 rounded-lg bg-transparent dark:bg-gray-800 overflow-auto;
   }
 }
 
