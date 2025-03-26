@@ -4,7 +4,6 @@ date: 2025-03-14
 tags: ["optimisation", "web development"]
 description: "A website that finds an infinite lunch cycle"
 ---
-
 Legend has it that, in the 80s, London financiers would take a "working" lunch, then catch the Concorde to New York, arriving just in time for another lunch due to time zone differences.
 
 Infinite Lunch solves this optimization problem: can you visit multiple cities worldwide, always arriving during local lunchtime?
