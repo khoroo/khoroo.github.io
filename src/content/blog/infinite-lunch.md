@@ -1,7 +1,7 @@
 ---
 title: "Infinite Lunch"
 date: 2025-03-14
-tags: ["optimisation", "web development"]
+tags: ["projects"]
 description: "A website that finds an infinite lunch cycle"
 ---
 Legend has it that, in the 80s, London financiers would take a "working" lunch, then catch the Concorde to New York, arriving just in time for another lunch due to time zone differences.

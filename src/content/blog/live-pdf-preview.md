@@ -1,7 +1,7 @@
 ---
 title: "Live PDF Previewing with Vim and Pandoc"
 date: 2025-03-26
-tags: ["devops", "nix"]
+tags: ["tools"]
 description: "Writing documents in Vim with a live reloading PDF."
 ---
 There are many tools to write PDFs from markup - a tool agnostic workflow can be built around writing the markup and previewing the document incredibly simply.
