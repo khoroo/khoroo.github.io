@@ -1,34 +1,21 @@
 ---
-title: "Live PDF Previewing with Vim and Pandoc"
+title: "Live PDF Previewing"
 date: 2025-03-26
 tags: ["tools"]
-description: "Writing documents in Vim with a live reloading PDF."
+description: "Autocommands and PDF viewers with live-reloading"
 ---
-There are many tools to write PDFs from markup - a tool agnostic workflow can be built around writing the markup and previewing the document incredibly simply.
-
-## Setting Up Vim for Auto-Compilation
-
-This approach works with Vim, but almost all text editors support something similar as part of their compiler or build system integration.
-
-For reference, you can find example configurations in my [letter-loader repository](https://github.com/khoroo/letter-loader).
-
-### The Magic Command
-
-The key is setting up a command that automatically runs when you save your file:
-
-```vim
-autocmd BufWritePost *.md !pandoc %:t -o %:t:r.pdf --template="pandoc-letter-din5008/letter"
-```
-
-This command works as follows:
-- `autocmd BufWritePost *.md` - Triggers on saving any Markdown file
-- `!pandoc %:t -o %:t:r.pdf` - Converts the current file to PDF
-- `--template="pandoc-letter-din5008/letter"` - Uses a specific template
-
-You can adapt this pattern for your needs: 
-
-```vim
-autocmd BufWritePost <file-pattern> !<your command>
+If your writing a document in some kind of intermediate representation (`.tex`, `.md`, `.typst`) that gets turned into a PDF, you might use your editor to run a command upon writing a file matching a pattern, in neovim for example:
+```lua
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.md",
+  callback = function()
+    local file = vim.fn.expand('%:t')
+    local output = vim.fn.expand('%:t:r') .. '.pdf'
+    vim.loop.spawn('pandoc', {
+      args = {file, '-o', output},
+    }, function() print("PDF generated!") end)
+  end
+})
 ```
 
 ## PDF Viewing with Live Reload
